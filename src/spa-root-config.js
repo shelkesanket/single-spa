@@ -6,6 +6,24 @@ import {
 } from "single-spa-layout";
 import microfrontendLayout from "./microfrontend-layout.html";
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((registration) => {
+        // eslint-disable-next-line no-console
+        console.log(
+          "Service Worker registered with scope:",
+          registration.scope
+        );
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Service Worker registration failed:", error);
+      });
+  });
+}
+
 const routes = constructRoutes(microfrontendLayout);
 const applications = constructApplications({
   routes,
