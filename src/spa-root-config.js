@@ -10,6 +10,9 @@ const routes = constructRoutes(microfrontendLayout);
 const applications = constructApplications({
   routes,
   loadApp({ name }) {
+    if (name === "spa-miniapp") {
+      return System.import("http://localhost:8080/spa-miniapp.js");
+    }
     return System.import(name);
   },
 });
